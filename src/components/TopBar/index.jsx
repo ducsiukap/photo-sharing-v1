@@ -31,7 +31,7 @@ function TopBar() {
           : `Photos of ${u.first_name}`
       );
     }
-  }, []);
+  }, [path]);
   return (
     <AppBar className="topbar-appBar" position="absolute">
       <Toolbar>

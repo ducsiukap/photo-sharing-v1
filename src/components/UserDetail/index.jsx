@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import "./styles.css";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import models from "../../modelData/models";
 
 /**
@@ -10,37 +10,36 @@ import models from "../../modelData/models";
  */
 function UserDetail() {
   const { userId } = useParams();
-
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
-
   useEffect(() => {
     setUser(models.userModel(userId));
+    // console.log("hi");
   });
 
   return (
-    <div id="user-detail-container">
+    <div className="user-detail-container">
       <span style={{ fontSize: "40px", fontWeight: "bold" }}>
         {user.first_name} {user.last_name}
       </span>
-      <span>
-        <Link to={`/photos/${userId}`} id="link-to-user-photos">
-          View {user.first_name}'s photos
-        </Link>
-      </span>
-      <div style={{ fontSize: "14px", display: "flex", gap: "30px" }}>
+      <div
+        style={{ fontSize: "12px", display: "flex", gap: "30px", opacity: 0.5 }}
+      >
         <div>
-          {/* <img /> */}
-          {user.location}
+          <img src="/icon/loc.jpg" height="12px" />
+          &nbsp;{user.location}
         </div>
         <div>
-          {/* <img /> */}
-          {user.occupation}
+          <img src="/icon/job.png" height="10px" />
+          &nbsp;{user.occupation}
         </div>
       </div>
-
-      <div style={{ fontSize: "12px", fontStyle: "italic" }}>
-        {user.description}
-      </div>
+      <br />
+      <div style={{ fontSize: "20px" }}>"{user.description}"</div>
+      <br />
+      <button onClick={() => navigate(`/photos/${user._id}`)}>
+        View {user.first_name}'s photos
+      </button>
     </div>
   );
 }

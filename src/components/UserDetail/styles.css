@@ -1,0 +1,11 @@
+.user-detail-container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  background-color: darkred;
+  color: white;
+}

@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { List, ListItem, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import "./styles.css";
-import { useParams } from "react-router-dom";
-import models from "../../modelData/models";
-// import { green } from "@mui/material/colors";
+import { List, ListItem } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
 
-/**
- * Define UserPhotos, a React component of Project 4.
- */
+import "./styles.css";
+import models from "../../modelData/models";
+
 function UserPhotos() {
   const { userId } = useParams();
   const [photos, setPhotos] = useState([]);
@@ -19,48 +15,61 @@ function UserPhotos() {
     setPhotos(models.photoOfUserModel(userId));
 
     // console.log(photo)
-  }, []);
+  }, [userId]);
   return (
     <>
-      <h3 style={{}}>{name}'s Photos:</h3>
-      <div>
+      <Link
+        to={`/users/${userId}`}
+        style={{ textDecoration: "none", fontWeight: "bold", color: "darkred" }}
+      >
+        &lt; Back
+      </Link>
+      <h3>{name}'s Photos:</h3>
+      <div className="all-photos">
         {photos.map((item) => (
-          <div
-            className="user-photo-container"
-            key={item._id}
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-          >
+          <div className="user-photo-container" key={item._id}>
             <div className="photo-info">
               <img src={`/images/${item.file_name}`} alt="" />
-              <span style={{ fontSize: "12px", fontStyle: "italic" }}>
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: "10px",
+                  fontStyle: "italic",
+                  opacity: "50%",
+                  // alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 Ngày đăng: {item.date_time}
-              </span>
+              </div>
             </div>
-
-            <div className="comments">
-              <List>
-                {item.comments &&
-                  item.comments.map((cmt) => (
-                    <ListItem
-                      sx={{display: "grid", gap: "5px", padding: "0px"}}
-                      key={cmt._id}
+            <br />
+            <div className="comment-container">
+              {item.comments &&
+                item.comments.map((cmt) => (
+                  <div className="comment">
+                    <Link
+                      to={`/users/${cmt.user._id}`}
+                      style={{
+                        textDecoration: "none",
+                        fontWeight: "bold",
+                        color: "black",
+                      }}
                     >
-                      <div className="cmt-title" style={{ display: "flex", gap: "10px", fontSize: "12px" }}>
-                        <span style={{ fontWeight: "bold" }}>
-                          <Link
-                            to={`/users/${cmt.user._id}`}
-                            style={{ textDecoration: "none", color: "black" }}
-                          >
-                            {cmt.user.first_name + " " + cmt.user.last_name}
-                          </Link>
-                        </span>
-                        <span>{cmt.date_time}</span>
-                      </div>
-
-                      <div className="cmt-content">{cmt.comment}</div>
-                    </ListItem>
-                  ))}
-              </List>
+                      {cmt.user.first_name + " " + cmt.user.last_name}
+                    </Link>
+                    &nbsp;
+                    <span
+                      style={{
+                        opacity: "50%",
+                        fontSize: "10px",
+                      }}
+                    >
+                      {cmt.date_time}
+                    </span>
+                    <div>{cmt.comment}</div>
+                  </div>
+                ))}
             </div>
           </div>
         ))}
