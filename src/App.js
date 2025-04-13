@@ -35,7 +35,7 @@ const App = (props) => {
                       element = {<UserPhotos />}
                   />
                   <Route path="/users" element={<UserList />} /> 
-                  <Route path='/' element={<UserList />} />
+                  <Route path='*' element={<UserList />} />
                 </Routes>
               </Paper>
             </Grid>
