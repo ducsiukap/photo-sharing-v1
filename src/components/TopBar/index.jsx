@@ -26,9 +26,7 @@ function TopBar() {
       const u = models.userModel(paths[2]);
       setUser(u);
       setContext(
-        paths[1] === "users"
-          ? "User Information"
-          : `Photos of ${u.first_name}`
+        paths[1] === "users" ? "User Information" : `Photos of ${u.first_name}`
       );
     }
   }, [path]);
